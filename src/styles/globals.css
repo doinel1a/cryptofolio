@@ -81,6 +81,6 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply flex flex-col bg-background text-foreground;
   }
 }
