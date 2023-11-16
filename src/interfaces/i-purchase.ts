@@ -14,5 +14,9 @@ export interface IPurchaseTransaction {
   unitPrice: number;
   quantity: number;
   totalCost: number;
-  date: Date;
+  date: {
+    day: string;
+    month: string;
+    year: string;
+  };
 }

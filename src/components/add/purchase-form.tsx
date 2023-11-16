@@ -8,7 +8,8 @@ import { CalendarIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 import { cn } from '@/lib/utils';
-import { PurchasingSchema, TPurchasing } from '@/schemas/s-purchasing';
+import { PurchaseSchema, TPurchase } from '@/schemas/s-purchase';
+import usePurchaseStore from '@/store/use-purchase-store';
 
 import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
@@ -16,14 +17,21 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '../ui/form/input';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
-export default function AddPurchasingForm() {
-  const form = useForm<TPurchasing>({
-    resolver: zodResolver(PurchasingSchema)
+export default function AddPurchaseForm() {
+  const addNewPurchase = usePurchaseStore((state) => state.addNewPurchase);
+
+  const form = useForm<TPurchase>({
+    resolver: zodResolver(PurchaseSchema),
+    defaultValues: {
+      tokenName: '',
+      unitPrice: '',
+      quantity: '',
+      date: new Date()
+    }
   });
 
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  function onSubmit(values: TPurchasing) {
-    console.log(values);
+  function onSubmit(values: TPurchase) {
+    addNewPurchase(values);
   }
 
   return (
@@ -31,17 +39,17 @@ export default function AddPurchasingForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5'>
         <FormField
           control={form.control}
-          name='name'
+          name='tokenName'
           render={({ field }) => (
             <FormItem>
               <div className='flex items-center'>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Token name</FormLabel>
                 &nbsp;
                 <FormMessage />
               </div>
 
               <FormControl>
-                <Input type='text' placeholder='Token name' {...field} />
+                <Input type='text' placeholder='Bitcoin' {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -49,17 +57,17 @@ export default function AddPurchasingForm() {
 
         <FormField
           control={form.control}
-          name='price'
+          name='unitPrice'
           render={({ field }) => (
             <FormItem>
               <div className='flex items-center'>
-                <FormLabel>Price</FormLabel>
+                <FormLabel>Unit price</FormLabel>
                 &nbsp;
                 <FormMessage />
               </div>
 
               <FormControl>
-                <Input type='text' inputMode='decimal' placeholder='Token price' {...field} />
+                <Input type='text' inputMode='decimal' placeholder='20.000' {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -77,7 +85,7 @@ export default function AddPurchasingForm() {
               </div>
 
               <FormControl>
-                <Input type='text' inputMode='decimal' placeholder='Token quantity' {...field} />
+                <Input type='text' inputMode='decimal' placeholder='100' {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -124,7 +132,7 @@ export default function AddPurchasingForm() {
         />
 
         <Button type='submit' className='w-full'>
-          Add purchasing
+          Add purchase
         </Button>
       </form>
     </Form>
