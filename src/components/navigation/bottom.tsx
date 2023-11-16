@@ -10,7 +10,7 @@ import ERoutesName from '@/constants/routes';
 import NavLink from '../nav-link';
 
 interface IRoutes {
-  path: string;
+  path: ERoutesName;
   icon: React.ComponentType<{ className?: string }>;
 }
 
@@ -31,20 +31,14 @@ const navigationRoutes: Record<string, IRoutes> = {
 
 const routesKey = Object.keys(navigationRoutes) as (keyof typeof navigationRoutes)[];
 
-const regex = /\/(.*?)\//;
-
 export default function BottomNavigation() {
   const currentPath = usePathname();
-
-  const match = currentPath.match(regex);
-  const currentFolder = match ? match[1] : '/';
 
   return (
     <nav className='mb-5 flex h-24 items-center justify-between px-2.5'>
       {routesKey.map((key) => {
         const { path, icon: Icon } = navigationRoutes[key];
-
-        const isActive = currentPath === '/' ? path === '/' : path.includes(currentFolder);
+        const isActive = currentPath === '/' ? path === '/' : path.includes(currentPath);
 
         return (
           <NavLink
