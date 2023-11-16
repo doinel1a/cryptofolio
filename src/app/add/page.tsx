@@ -1,11 +1,23 @@
+'use client';
+
 import React from 'react';
 
-import AddPurchasingForm from '@/components/add/purchasing-form';
-import AddStakingForm from '@/components/add/staking-form';
+import dynamic from 'next/dynamic';
+
+import DynamicFallback from '@/components/dynamic-fallback';
 import NavLink from '@/components/nav-link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ERoutesName from '@/constants/routes';
 import CTabsName from '@/constants/tabs';
+
+const AddPurchasingForm = dynamic(() => import('@/components/add/purchasing-form'), {
+  ssr: false,
+  loading: () => <DynamicFallback className='rounded-t-md' />
+});
+const AddStakingForm = dynamic(() => import('@/components/add/staking-form'), {
+  ssr: false,
+  loading: () => <DynamicFallback className='rounded-t-md' />
+});
 
 interface IAddPage {
   searchParams: { [key: string]: string | string[] | undefined };
