@@ -10,11 +10,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ERoutesName from '@/constants/routes';
 import CTabsName from '@/constants/tabs';
 
-const AddPurchasingForm = dynamic(() => import('@/components/add/purchasing-form'), {
+const AddPurchaseForm = dynamic(() => import('@/components/add/purchase-form'), {
   ssr: false,
   loading: () => <DynamicFallback className='rounded-t-md' />
 });
-const AddStakingForm = dynamic(() => import('@/components/add/staking-form'), {
+const AddStakeForm = dynamic(() => import('@/components/add/stake-form'), {
   ssr: false,
   loading: () => <DynamicFallback className='rounded-t-md' />
 });
@@ -24,27 +24,27 @@ interface IAddPage {
 }
 
 export default function AddPage({ searchParams }: IAddPage) {
-  const selectedTab = (searchParams.tab || 'purchasing') as string;
+  const selectedTab = (searchParams.tab || CTabsName.purchase) as string;
 
   return (
     <Tabs defaultValue={selectedTab} className='flex h-full w-full flex-col p-2.5'>
       <TabsList className='w-full'>
-        <TabsTrigger value={CTabsName.purchasing} className='w-1/2 p-0'>
-          <NavLink href={ERoutesName.addPurchasing} className='h-full w-full px-3 py-1.5'>
-            Purchasing
+        <TabsTrigger value={CTabsName.purchase} className='w-1/2 p-0'>
+          <NavLink href={ERoutesName.addPurchase} className='h-full w-full px-3 py-1.5'>
+            Purchase
           </NavLink>
         </TabsTrigger>
-        <TabsTrigger value={CTabsName.staking} className='w-1/2 p-0'>
-          <NavLink href={ERoutesName.addStaking} className='h-full w-full px-3 py-1.5'>
-            Staking
+        <TabsTrigger value={CTabsName.stake} className='w-1/2 p-0'>
+          <NavLink href={ERoutesName.addStake} className='h-full w-full px-3 py-1.5'>
+            Stake
           </NavLink>
         </TabsTrigger>
       </TabsList>
-      <TabsContent value={CTabsName.purchasing} className='h-full w-full'>
-        <AddPurchasingForm />
+      <TabsContent value={CTabsName.purchase} className='h-full w-full'>
+        <AddPurchaseForm />
       </TabsContent>
-      <TabsContent value={CTabsName.staking} className='h-full w-full'>
-        <AddStakingForm />
+      <TabsContent value={CTabsName.stake} className='h-full w-full'>
+        <AddStakeForm />
       </TabsContent>
     </Tabs>
   );

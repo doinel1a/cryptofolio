@@ -1,9 +1,9 @@
 enum ERoutesName {
   home = '/',
-  addPurchasing = '/add?tab=purchasing',
-  addStaking = '/add?tab=staking',
-  purchasingList = '/list?tab=purchasing',
-  stakingList = '/list?tab=staking'
+  addPurchase = '/add?tab=purchase',
+  addStake = '/add?tab=stake',
+  purchaseList = '/list?tab=purchase',
+  stakeList = '/list?tab=stake'
 }
 
 export default ERoutesName;

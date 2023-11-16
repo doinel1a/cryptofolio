@@ -1,7 +1,7 @@
 import React from 'react';
 
-import PurchasingList from '@/components/list/purchasing';
-import StakingList from '@/components/list/staking';
+import PurchaseList from '@/components/list/purchase';
+import StakeList from '@/components/list/stake';
 import NavLink from '@/components/nav-link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ERoutesName from '@/constants/routes';
@@ -12,27 +12,27 @@ interface IListPage {
 }
 
 export default function ListPage({ searchParams }: IListPage) {
-  const selectedTab = (searchParams.tab || 'purchasing') as string;
+  const selectedTab = (searchParams.tab || CTabsName.purchase) as string;
 
   return (
     <Tabs defaultValue={selectedTab} className='flex h-full w-full flex-col p-2.5'>
       <TabsList className='w-full'>
-        <TabsTrigger value={CTabsName.purchasing} className='w-1/2 p-0'>
-          <NavLink href={ERoutesName.purchasingList} className='h-full w-full px-3 py-1.5'>
-            Purchasing
+        <TabsTrigger value={CTabsName.purchase} className='w-1/2 p-0'>
+          <NavLink href={ERoutesName.purchaseList} className='h-full w-full px-3 py-1.5'>
+            Purchase
           </NavLink>
         </TabsTrigger>
-        <TabsTrigger value={CTabsName.staking} className='w-1/2 p-0'>
-          <NavLink href={ERoutesName.stakingList} className='h-full w-full px-3 py-1.5'>
-            Staking
+        <TabsTrigger value={CTabsName.stake} className='w-1/2 p-0'>
+          <NavLink href={ERoutesName.stakeList} className='h-full w-full px-3 py-1.5'>
+            Stake
           </NavLink>
         </TabsTrigger>
       </TabsList>
-      <TabsContent value={CTabsName.purchasing} className='h-full w-full'>
-        <PurchasingList />
+      <TabsContent value={CTabsName.purchase} className='h-full w-full'>
+        <PurchaseList />
       </TabsContent>
-      <TabsContent value={CTabsName.staking} className='h-full w-full'>
-        <StakingList />
+      <TabsContent value={CTabsName.stake} className='h-full w-full'>
+        <StakeList />
       </TabsContent>
     </Tabs>
   );
