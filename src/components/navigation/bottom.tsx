@@ -20,11 +20,11 @@ const navigationRoutes: Record<string, IRoutes> = {
     icon: Home
   },
   Add: {
-    path: ERoutesName.addPurchasing,
+    path: ERoutesName.addPurchase,
     icon: ShoppingCart
   },
   List: {
-    path: ERoutesName.purchasingList,
+    path: ERoutesName.purchaseList,
     icon: List
   }
 };

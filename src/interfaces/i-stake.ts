@@ -1,10 +1,10 @@
 /* eslint-disable semi */
 /* eslint-disable unicorn/prevent-abbreviations */
 
-export default interface IStaking {
+export default interface IStake {
   id: string;
-  name: string;
-  provider: string;
+  tokenName: string;
+  providerName: string;
   quantity: number;
   apr: number;
   apy: number;

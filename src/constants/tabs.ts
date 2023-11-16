@@ -1,6 +1,6 @@
 const CTabsName = {
-  purchasing: 'purchasing',
-  staking: 'staking'
+  purchase: 'purchase',
+  stake: 'stake'
 } as const;
 
 export default CTabsName;
