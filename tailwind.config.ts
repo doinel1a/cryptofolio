@@ -1,4 +1,5 @@
 /* eslint-disable unicorn/prefer-module */
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
@@ -22,6 +23,7 @@ module.exports = {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
+        'background-secondary': 'hsl(var(--background-secondary))',
         foreground: 'hsl(var(--foreground))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
@@ -41,6 +43,10 @@ module.exports = {
         },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))'
+        },
+        'accent-secondary': {
+          DEFAULT: 'hsl(var(--accent-secondary))',
           foreground: 'hsl(var(--accent-foreground))'
         },
         popover: {
