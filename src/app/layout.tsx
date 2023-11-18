@@ -2,6 +2,7 @@ import { ThemeProvider } from '@/components/ui/theme/provider';
 
 import '../styles/globals.css';
 import '../styles/globals.scss';
+import '@total-typescript/ts-reset';
 
 import type { Metadata } from 'next';
 
