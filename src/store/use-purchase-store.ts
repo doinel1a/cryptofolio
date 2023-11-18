@@ -44,16 +44,13 @@ function purchaseReducer(state: IState, action: IAction) {
               id: uuid(),
               unitPrice: roundDecimal(Number(unitPrice), 5),
               quantity: roundDecimal(Number(quantity), 5),
-              totalCost: roundDecimal(Number(unitPrice) * Number(quantity), 5),
               date: {
                 day: `${date.getDay()}`,
                 month: `${date.getMonth()}`,
                 year: `${date.getFullYear()}`
               }
             }
-          ],
-          totalQuantity: Number(quantity),
-          totalInvestment: Number(unitPrice) * Number(quantity)
+          ]
         });
 
         return {
@@ -65,22 +62,12 @@ function purchaseReducer(state: IState, action: IAction) {
         id: uuid(),
         unitPrice: roundDecimal(Number(unitPrice), 5),
         quantity: roundDecimal(Number(quantity), 5),
-        totalCost: roundDecimal(Number(unitPrice) * Number(quantity), 5),
         date: {
           day: `${date.getDay()}`,
           month: `${date.getMonth()}`,
           year: `${date.getFullYear()}`
         }
       });
-      deepCurrentPurchases[newTransactionIndex].totalQuantity = roundDecimal(
-        deepCurrentPurchases[newTransactionIndex].totalQuantity + Number(quantity),
-        5
-      );
-      deepCurrentPurchases[newTransactionIndex].totalInvestment = roundDecimal(
-        deepCurrentPurchases[newTransactionIndex].totalInvestment +
-          Number(unitPrice) * Number(quantity),
-        5
-      );
 
       return {
         purchased: deepCurrentPurchases
@@ -113,17 +100,8 @@ function purchaseReducer(state: IState, action: IAction) {
             break;
           }
 
-          const transactionQuantity = purchase.transactions[transactionToRemoveIndex].quantity;
-          const transactionTotalCost = purchase.transactions[transactionToRemoveIndex].totalCost;
-
           purchase.transactions = purchase.transactions.filter(
             (transaction) => transaction.id !== idToRemove
-          );
-
-          purchase.totalQuantity = roundDecimal(purchase.totalQuantity - transactionQuantity, 5);
-          purchase.totalInvestment = roundDecimal(
-            purchase.totalInvestment - transactionTotalCost,
-            5
           );
 
           break;

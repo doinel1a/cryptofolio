@@ -52,7 +52,7 @@ export default function PurchaseList() {
   }
 
   return (
-    <div className='flex h-full w-full flex-col gap-y-5 rounded-t-md p-4'>
+    <div className='flex h-full w-full flex-col gap-y-5 rounded-t-md'>
       {purchasedList.map(
         (purchased) =>
           tokensData?.map(

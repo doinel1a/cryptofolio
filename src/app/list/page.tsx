@@ -37,10 +37,10 @@ export default function ListPage({ searchParams }: IListPage) {
           </NavLink>
         </TabsTrigger>
       </TabsList>
-      <TabsContent value={CTabsName.purchase} className='h-full w-full overflow-y-scroll'>
+      <TabsContent value={CTabsName.purchase} className='h-full w-full overflow-y-scroll p-4'>
         <PurchaseList />
       </TabsContent>
-      <TabsContent value={CTabsName.stake} className='h-full w-full overflow-y-scroll'>
+      <TabsContent value={CTabsName.stake} className='h-full w-full overflow-y-scroll p-4'>
         <StakeList />
       </TabsContent>
     </Tabs>

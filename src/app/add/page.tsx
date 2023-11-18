@@ -10,11 +10,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ERoutesName from '@/constants/routes';
 import CTabsName from '@/constants/tabs';
 
-const AddPurchaseForm = dynamic(() => import('@/components/add/purchase-form'), {
+const AddPurchaseForm = dynamic(() => import('@/components/forms/purchase'), {
   ssr: false,
   loading: () => <DynamicFallback className='rounded-t-md' />
 });
-const AddStakeForm = dynamic(() => import('@/components/add/stake-form'), {
+const AddStakeForm = dynamic(() => import('@/components/forms/stake'), {
   ssr: false,
   loading: () => <DynamicFallback className='rounded-t-md' />
 });
@@ -40,10 +40,10 @@ export default function AddPage({ searchParams }: IAddPage) {
           </NavLink>
         </TabsTrigger>
       </TabsList>
-      <TabsContent value={CTabsName.purchase} className='h-full w-full'>
+      <TabsContent value={CTabsName.purchase} className='h-full w-full p-4'>
         <AddPurchaseForm />
       </TabsContent>
-      <TabsContent value={CTabsName.stake} className='h-full w-full'>
+      <TabsContent value={CTabsName.stake} className='h-full w-full p-4'>
         <AddStakeForm />
       </TabsContent>
     </Tabs>
