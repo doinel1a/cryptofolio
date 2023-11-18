@@ -10,6 +10,7 @@ import React from 'react';
 
 import BottomNavigation from '@/components/navigation/bottom';
 import TopNavigation from '@/components/navigation/top';
+import EStorageKeys from '@/constants/keys';
 
 import Providers from './providers';
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
+          storageKey={EStorageKeys.theme}
           enableSystem
           disableTransitionOnChange
         >
