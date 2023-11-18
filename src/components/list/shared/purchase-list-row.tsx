@@ -159,7 +159,7 @@ export default function PurchaseListRow({
             >
               <Column title='Price' value={transaction.unitPrice} currency />
               <Column title='Qty' value={transaction.quantity} />
-              <Column title='Cost' value={transaction.totalCost} currency />
+              <Column title='Cost' value={transaction.unitPrice * transaction.quantity} currency />
               <Column
                 title='Date'
                 value={`
