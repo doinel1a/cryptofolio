@@ -1,11 +1,20 @@
+'use client';
+
 import React from 'react';
 
-import PurchaseList from '@/components/list/purchase';
+import dynamic from 'next/dynamic';
+
+import DynamicFallback from '@/components/dynamic-fallback';
 import StakeList from '@/components/list/stake';
 import NavLink from '@/components/nav-link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ERoutesName from '@/constants/routes';
 import CTabsName from '@/constants/tabs';
+
+const PurchaseList = dynamic(() => import('@/components/list/purchase'), {
+  ssr: false,
+  loading: () => <DynamicFallback className='rounded-t-md' />
+});
 
 interface IListPage {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -28,10 +37,10 @@ export default function ListPage({ searchParams }: IListPage) {
           </NavLink>
         </TabsTrigger>
       </TabsList>
-      <TabsContent value={CTabsName.purchase} className='h-full w-full'>
+      <TabsContent value={CTabsName.purchase} className='h-full w-full overflow-y-scroll'>
         <PurchaseList />
       </TabsContent>
-      <TabsContent value={CTabsName.stake} className='h-full w-full'>
+      <TabsContent value={CTabsName.stake} className='h-full w-full overflow-y-scroll'>
         <StakeList />
       </TabsContent>
     </Tabs>

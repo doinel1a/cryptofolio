@@ -2,6 +2,7 @@ import { ThemeProvider } from '@/components/ui/theme/provider';
 
 import '../styles/globals.css';
 import '../styles/globals.scss';
+import '@total-typescript/ts-reset';
 
 import type { Metadata } from 'next';
 
@@ -9,6 +10,9 @@ import React from 'react';
 
 import BottomNavigation from '@/components/navigation/bottom';
 import TopNavigation from '@/components/navigation/top';
+import EStorageKeys from '@/constants/keys';
+
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,16 +26,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
+          storageKey={EStorageKeys.theme}
           enableSystem
           disableTransitionOnChange
         >
           <TopNavigation />
 
-          <main className='h-full w-full px-2.5'>
-            <div className='flex h-full w-full flex-col rounded-t-md border-l border-r border-t bg-background-secondary shadow-md'>
-              {children}
-            </div>
-          </main>
+          <Providers>
+            <main className='h-full w-full overflow-hidden px-2.5'>
+              <div className='flex h-full w-full flex-col rounded-t-md border-l border-r border-t bg-background-secondary shadow-md'>
+                {children}
+              </div>
+            </main>
+          </Providers>
 
           <BottomNavigation />
         </ThemeProvider>
