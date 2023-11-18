@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function createDeepCopy<T>(object: T): T {
-  return JSON.parse(JSON.stringify(object));
+  return JSON.parse(JSON.stringify(object)) as T;
 }
 
 export function roundDecimal(value: number, decimalPlace?: number) {
