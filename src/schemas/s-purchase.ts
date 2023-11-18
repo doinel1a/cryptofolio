@@ -12,21 +12,15 @@ export const PurchaseSchema = z.object({
   unitPrice: z
     .string()
     .min(1, { message: EErrorMessages.empty })
-    .transform(replaceComma)
     .refine((value) => /^\d+(\.\d+)?$/.test(value), { message: EErrorMessages.invalidNumber }),
   quantity: z
     .string()
     .min(1, { message: EErrorMessages.empty })
-    .transform(replaceComma)
     .refine((value) => /^\d+(\.\d+)?$/.test(value), { message: EErrorMessages.invalidNumber }),
   date: z.date({
     required_error: EErrorMessages.empty,
     invalid_type_error: EErrorMessages.invalidDate
   })
 });
-
-function replaceComma(value: string) {
-  return value.replaceAll(',', '.');
-}
 
 export type TPurchase = z.infer<typeof PurchaseSchema>;
