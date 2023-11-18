@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 
 import EStorageKeys from '@/constants/keys';
 import { IPurchase } from '@/interfaces/i-purchase';
-import { createDeepCopy } from '@/lib/utils';
+import { createDeepCopy, roundDecimal } from '@/lib/utils';
 import { TPurchase } from '@/schemas/s-purchase';
 
 interface IState {
@@ -42,9 +42,9 @@ function purchaseReducer(state: IState, action: IAction) {
           transactions: [
             {
               id: uuid(),
-              unitPrice: Number(unitPrice),
-              quantity: Number(quantity),
-              totalCost: Number(unitPrice) * Number(quantity),
+              unitPrice: roundDecimal(Number(unitPrice), 5),
+              quantity: roundDecimal(Number(quantity), 5),
+              totalCost: roundDecimal(Number(unitPrice) * Number(quantity), 5),
               date: {
                 day: `${date.getDay()}`,
                 month: `${date.getMonth()}`,
@@ -63,18 +63,24 @@ function purchaseReducer(state: IState, action: IAction) {
 
       deepCurrentPurchases[newTransactionIndex].transactions.push({
         id: uuid(),
-        unitPrice: Number(unitPrice),
-        quantity: Number(quantity),
-        totalCost: Number(unitPrice) * Number(quantity),
+        unitPrice: roundDecimal(Number(unitPrice), 5),
+        quantity: roundDecimal(Number(quantity), 5),
+        totalCost: roundDecimal(Number(unitPrice) * Number(quantity), 5),
         date: {
           day: `${date.getDay()}`,
           month: `${date.getMonth()}`,
           year: `${date.getFullYear()}`
         }
       });
-      deepCurrentPurchases[newTransactionIndex].totalQuantity += Number(quantity);
-      deepCurrentPurchases[newTransactionIndex].totalInvestment +=
-        Number(unitPrice) * Number(quantity);
+      deepCurrentPurchases[newTransactionIndex].totalQuantity = roundDecimal(
+        deepCurrentPurchases[newTransactionIndex].totalQuantity + Number(quantity),
+        5
+      );
+      deepCurrentPurchases[newTransactionIndex].totalInvestment = roundDecimal(
+        deepCurrentPurchases[newTransactionIndex].totalInvestment +
+          Number(unitPrice) * Number(quantity),
+        5
+      );
 
       return {
         purchased: deepCurrentPurchases
@@ -106,8 +112,11 @@ function purchaseReducer(state: IState, action: IAction) {
             (transaction) => transaction.id !== idToRemove
           );
 
-          purchase.totalQuantity -= transactionQuantity;
-          purchase.totalInvestment -= transactionTotalCost;
+          purchase.totalQuantity = roundDecimal(purchase.totalQuantity - transactionQuantity, 5);
+          purchase.totalInvestment = roundDecimal(
+            purchase.totalInvestment - transactionTotalCost,
+            5
+          );
 
           break;
         }
