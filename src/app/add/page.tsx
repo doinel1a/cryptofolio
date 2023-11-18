@@ -40,10 +40,10 @@ export default function AddPage({ searchParams }: IAddPage) {
           </NavLink>
         </TabsTrigger>
       </TabsList>
-      <TabsContent value={CTabsName.purchase} className='h-full w-full'>
+      <TabsContent value={CTabsName.purchase} className='h-full w-full p-4'>
         <AddPurchaseForm />
       </TabsContent>
-      <TabsContent value={CTabsName.stake} className='h-full w-full'>
+      <TabsContent value={CTabsName.stake} className='h-full w-full p-4'>
         <AddStakeForm />
       </TabsContent>
     </Tabs>
