@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <TopNavigation />
 
           <Providers>
-            <main className='h-full w-full px-2.5'>
+            <main className='h-full w-full overflow-hidden px-2.5'>
               <div className='flex h-full w-full flex-col rounded-t-md border-l border-r border-t bg-background-secondary shadow-md'>
                 {children}
               </div>
