@@ -2,42 +2,30 @@
 
 import React from 'react';
 
-import { AlertTriangle } from 'lucide-react';
+import IAPITokenData from '@/interfaces/i-api-token-data';
+import { IPurchase } from '@/interfaces/i-purchase';
 
-import useGetSupportedTokens from '@/hooks/use-get-supported-tokens';
-import useGetTokensData from '@/hooks/use-get-tokens-data';
-import usePurchaseStore from '@/store/use-purchase-store';
-
+import UIStatus from '../ui-status';
 import PurchaseListRow from './shared/purchase-list-row';
 
-const oneHour = 1;
-const minsIn1Hour = 60;
-const secsIn1Min = 60;
-const msIn1Sec = 1000;
-const refetchInterval = oneHour * minsIn1Hour * secsIn1Min * msIn1Sec;
+interface IPurchaseList {
+  purchasedList: IPurchase[];
+  tokensData: (IAPITokenData | undefined)[] | undefined;
+  isTokensDataLoading: boolean;
+}
 
-export default function PurchaseList() {
-  const purchasedList = usePurchaseStore((state) => state.purchased);
-
-  const { data: supportedTokens } = useGetSupportedTokens(
-    purchasedList,
-    purchasedList.length > 0,
-    refetchInterval
-  );
-  const { isLoading: isTokensDataLoading, tokensData } = useGetTokensData(
-    supportedTokens,
-    refetchInterval
-  );
-
+export default function PurchaseList({
+  purchasedList,
+  tokensData,
+  isTokensDataLoading
+}: IPurchaseList) {
   if (purchasedList.length === 0) {
     return (
-      <div className='flex h-full w-full flex-col items-center justify-center gap-y-2.5'>
-        <AlertTriangle className='h-16 w-16 text-yellow-400' />
-        <p className='text-center text-lg'>
-          Nothing to show! <br />
-          Add some token purchases
-        </p>
-      </div>
+      <UIStatus
+        status='warning'
+        statusTitle='Nothing to show!'
+        statusMessage='Add some token purchases'
+      />
     );
   }
 
