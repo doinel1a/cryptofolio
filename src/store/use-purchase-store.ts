@@ -45,8 +45,8 @@ function purchaseReducer(state: IState, action: IAction) {
               unitPrice: roundDecimal(Number(unitPrice), 5),
               quantity: roundDecimal(Number(quantity), 5),
               date: {
-                day: `${date.getDay()}`,
-                month: `${date.getMonth()}`,
+                day: `${date.getDate()}`,
+                month: `${date.getMonth() + 1}`,
                 year: `${date.getFullYear()}`
               }
             }
@@ -63,8 +63,8 @@ function purchaseReducer(state: IState, action: IAction) {
         unitPrice: roundDecimal(Number(unitPrice), 5),
         quantity: roundDecimal(Number(quantity), 5),
         date: {
-          day: `${date.getDay()}`,
-          month: `${date.getMonth()}`,
+          day: `${date.getDate()}`,
+          month: `${date.getMonth() + 1}`,
           year: `${date.getFullYear()}`
         }
       });
