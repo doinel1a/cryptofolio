@@ -4,13 +4,9 @@ import { OPTIONS, URLS } from '@/constants/coingecko-api';
 import IAPISupportedToken from '@/interfaces/i-api-supported-token';
 import { IPurchase } from '@/interfaces/i-purchase';
 
-export default function useGetSupportedTokens(
-  purchaseList: IPurchase[],
-  enabled: boolean,
-  refetchInterval: number
-) {
+export default function useGetSupportedTokens(purchaseList: IPurchase[], enabled: boolean) {
   return useQuery({
-    queryKey: ['supported-tokens', purchaseList.length],
+    queryKey: ['supported-tokens', purchaseList],
     queryFn: async () => {
       const supportedTokens: IAPISupportedToken[] = [];
 
@@ -55,6 +51,6 @@ export default function useGetSupportedTokens(
       return supportedTokens;
     },
     enabled,
-    refetchInterval
+    staleTime: Number.POSITIVE_INFINITY
   });
 }
