@@ -12,7 +12,7 @@ export default function useGetTokensData(
   const parallelQueries = useQueries({
     queries: (supportedTokens ?? []).map((token) => {
       return {
-        queryKey: ['token-data', token.id, supportedTokens?.length],
+        queryKey: ['token-data', token, supportedTokens],
         queryFn: async () => {
           const response = await fetch(URLS.tokensData(token.id), OPTIONS);
 

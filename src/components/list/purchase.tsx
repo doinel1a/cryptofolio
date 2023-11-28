@@ -2,50 +2,40 @@
 
 import React from 'react';
 
-import { AlertTriangle } from 'lucide-react';
+import IAPITokenData from '@/interfaces/i-api-token-data';
+import { IPurchase } from '@/interfaces/i-purchase';
 
-import useGetSupportedTokens from '@/hooks/use-get-supported-tokens';
-import useGetTokensData from '@/hooks/use-get-tokens-data';
-import usePurchaseStore from '@/store/use-purchase-store';
-
+import UIStatus from '../ui-status';
 import PurchaseListRow from './shared/purchase-list-row';
 
-const oneHour = 1;
-const minsIn1Hour = 60;
-const secsIn1Min = 60;
-const msIn1Sec = 1000;
-const refetchInterval = oneHour * minsIn1Hour * secsIn1Min * msIn1Sec;
+interface IPurchaseList {
+  purchaseList: IPurchase[];
+  tokensData: (IAPITokenData | undefined)[] | undefined;
+  isTokensDataLoading: boolean;
+}
 
-export default function PurchaseList() {
-  const purchasedList = usePurchaseStore((state) => state.purchased);
-
-  const { data: supportedTokens } = useGetSupportedTokens(
-    purchasedList,
-    purchasedList.length > 0,
-    refetchInterval
-  );
-  const { isLoading: isTokensDataLoading, tokensData } = useGetTokensData(
-    supportedTokens,
-    refetchInterval
-  );
-
-  if (purchasedList.length === 0) {
+export default function PurchaseList({
+  purchaseList,
+  tokensData,
+  isTokensDataLoading
+}: IPurchaseList) {
+  if (purchaseList.length === 0) {
     return (
-      <div className='flex h-full w-full flex-col items-center justify-center gap-y-2.5'>
-        <AlertTriangle className='h-16 w-16 text-yellow-400' />
-        <p className='text-center text-lg'>
-          Nothing to show! <br />
-          Add some token purchases
-        </p>
-      </div>
+      <UIStatus
+        status='warning'
+        statusTitle='Nothing to show!'
+        statusMessage='Add some token purchases'
+      />
     );
   }
 
   if (isTokensDataLoading) {
     return (
-      <div className='flex h-full w-full flex-col gap-y-5 p-4'>
-        {purchasedList.map((purchased) => (
-          <div key={purchased.id} className='h-16 w-full animate-pulse rounded-md bg-background' />
+      <div className='flex h-full w-full flex-col gap-y-5 rounded-t-md'>
+        {purchaseList.map((purchase) => (
+          <div key={purchase.id} className='flex w-full flex-col'>
+            <div className='h-24 w-full animate-pulse rounded-md bg-background' />
+          </div>
         ))}
       </div>
     );
@@ -53,19 +43,19 @@ export default function PurchaseList() {
 
   return (
     <div className='flex h-full w-full flex-col gap-y-5 rounded-t-md'>
-      {purchasedList.map(
-        (purchased) =>
+      {purchaseList.map(
+        (purchase) =>
           tokensData?.map(
             (token) =>
-              purchased.tokenName === token?.name && (
+              purchase.tokenName === token?.name && (
                 <PurchaseListRow
-                  key={purchased.id}
-                  purchaseID={purchased.id}
+                  key={purchase.id}
+                  purchaseID={purchase.id}
                   tokenName={token.name}
                   tokenSymbol={token.symbol}
                   tokenLogoURL={token.logoURL}
                   tokenCurrentPrice={token.currentPrice}
-                  transactions={purchased.transactions}
+                  transactions={purchase.transactions}
                 />
               )
           )

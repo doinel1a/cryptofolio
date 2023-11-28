@@ -44,12 +44,12 @@ export default function PurchaseListRow({
     (accumulator, currentTx) => accumulator + currentTx.unitPrice * currentTx.quantity,
     0
   );
-  const totalPurchasedQuantity = transactions.reduce(
+  const totalPurchaseQuantity = transactions.reduce(
     (accumulator, currentTx) => accumulator + currentTx.quantity,
     0
   );
   const investmentOutcome = Math.abs(currentInvestmentValue - totalInvested);
-  const averagePurchasePrice = totalInvested / totalPurchasedQuantity;
+  const averagePurchasePrice = totalInvested / totalPurchaseQuantity;
 
   return (
     <div className='flex w-full flex-col'>
@@ -57,12 +57,12 @@ export default function PurchaseListRow({
         tabIndex={0}
         role='button'
         className={cn(
-          `relative flex w-full items-center justify-center border 
+          `relative flex h-24 w-full items-center justify-center border 
           ${isTransactionsListExpanded ? 'rounded-t-md' : 'rounded-md'}`,
           className
         )}
         onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
+          if (event.key === 'Enter' || event.key === 'Space') {
             setIsTransactionsListExpanded((previousState) => !previousState);
           }
         }}
@@ -80,7 +80,7 @@ export default function PurchaseListRow({
         />
 
         <div className='flex w-full items-center py-2.5'>
-          <div className='mr-2.5 h-12 w-1 rounded-r-md bg-accent-secondary' />
+          <div className='mr-2.5 h-16 w-1 rounded-r-md bg-accent-secondary' />
 
           <TokenLogo alt={`${tokenName}'s logo`} src={tokenLogoURL} />
 
@@ -92,7 +92,7 @@ export default function PurchaseListRow({
 
             <div className='flex h-1/2 w-full items-center justify-between'>
               <p className='text-sm'>
-                {roundDecimal(totalPurchasedQuantity).toLocaleString('it')} {tokenSymbol}
+                {roundDecimal(totalPurchaseQuantity).toLocaleString('it')} {tokenSymbol}
               </p>
               <p
                 className={`${
@@ -119,22 +119,6 @@ export default function PurchaseListRow({
           <div className='flex w-full flex-col gap-2.5'>
             <div className='flex gap-2.5'>
               <Column
-                title={currentInvestmentValue > totalInvested ? 'Gain' : 'Loss'}
-                value={investmentOutcome}
-                className='w-1/2 rounded-md border p-1.5'
-                currency
-              />
-
-              <Column
-                title='Investment'
-                value={totalInvested}
-                className='w-1/2 rounded-md border p-1.5'
-                currency
-              />
-            </div>
-
-            <div className='flex gap-2.5'>
-              <Column
                 title='Current price'
                 value={tokenCurrentPrice}
                 className='w-1/2 rounded-md border p-1.5'
@@ -144,6 +128,22 @@ export default function PurchaseListRow({
               <Column
                 title='Average price'
                 value={averagePurchasePrice}
+                className='w-1/2 rounded-md border p-1.5'
+                currency
+              />
+            </div>
+
+            <div className='flex gap-2.5'>
+              <Column
+                title={currentInvestmentValue > totalInvested ? 'Gain' : 'Loss'}
+                value={investmentOutcome}
+                className='w-1/2 rounded-md border p-1.5'
+                currency
+              />
+
+              <Column
+                title='Investment'
+                value={totalInvested}
                 className='w-1/2 rounded-md border p-1.5'
                 currency
               />
@@ -171,6 +171,7 @@ export default function PurchaseListRow({
 
               <DeleteButton
                 variant='ghost'
+                className='flex h-full items-start'
                 onClick={() => deletePurchaseTransaction(transaction.id)}
               />
             </div>
