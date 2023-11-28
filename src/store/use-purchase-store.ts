@@ -447,20 +447,21 @@ interface IAction {
 }
 
 function purchaseReducer(state: IState, action: IAction) {
-  const { purchase: currentPurchases } = state;
+  const { purchase: currentPurchaseList } = state;
   const { type } = action;
 
   switch (type) {
     case 'addNewPurchase': {
       const { payload: newPurchase } = action;
       const { tokenName, unitPrice, quantity, date } = newPurchase as TPurchase;
-      const newTransactionIndex = currentPurchases.findIndex(
+
+      const deepCurrentPurchaseList = createDeepCopy(currentPurchaseList);
+      const newTransactionIndex = deepCurrentPurchaseList.findIndex(
         (purchase) => purchase.tokenName === tokenName
       );
-      const deepCurrentPurchases = createDeepCopy(currentPurchases);
 
       if (newTransactionIndex === -1) {
-        deepCurrentPurchases.push({
+        deepCurrentPurchaseList.push({
           id: uuid(),
           tokenName,
           transactions: [
@@ -478,11 +479,11 @@ function purchaseReducer(state: IState, action: IAction) {
         });
 
         return {
-          purchase: deepCurrentPurchases
+          purchase: deepCurrentPurchaseList
         };
       }
 
-      deepCurrentPurchases[newTransactionIndex].transactions.push({
+      deepCurrentPurchaseList[newTransactionIndex].transactions.push({
         id: uuid(),
         unitPrice: roundDecimal(Number(unitPrice), 5),
         quantity: roundDecimal(Number(quantity), 5),
@@ -494,25 +495,29 @@ function purchaseReducer(state: IState, action: IAction) {
       });
 
       return {
-        purchase: deepCurrentPurchases
+        purchase: deepCurrentPurchaseList
       };
     }
     case 'deletePurchase': {
       const idToRemove = action.payload as string;
-      let deepCurrentPurchases = createDeepCopy(currentPurchases);
-      deepCurrentPurchases = deepCurrentPurchases.filter((purchase) => purchase.id !== idToRemove);
+
+      let deepCurrentPurchaseList = createDeepCopy(currentPurchaseList);
+      deepCurrentPurchaseList = deepCurrentPurchaseList.filter(
+        (purchase) => purchase.id !== idToRemove
+      );
 
       return {
-        purchase: deepCurrentPurchases
+        purchase: deepCurrentPurchaseList
       };
     }
     case 'deletePurchaseTransaction': {
       const idToRemove = action.payload as string;
-      let deepCurrentPurchases = createDeepCopy(currentPurchases);
+
+      let deepCurrentPurchaseList = createDeepCopy(currentPurchaseList);
 
       let purchaseIdToRemove = '';
 
-      for (const purchase of deepCurrentPurchases) {
+      for (const purchase of deepCurrentPurchaseList) {
         const transactionToRemoveIndex = purchase.transactions.findIndex(
           (transaction) => transaction.id === idToRemove
         );
@@ -533,13 +538,13 @@ function purchaseReducer(state: IState, action: IAction) {
       }
 
       if (purchaseIdToRemove !== '') {
-        deepCurrentPurchases = deepCurrentPurchases.filter(
+        deepCurrentPurchaseList = deepCurrentPurchaseList.filter(
           (purchase) => purchase.id !== purchaseIdToRemove
         );
       }
 
       return {
-        purchase: deepCurrentPurchases
+        purchase: deepCurrentPurchaseList
       };
     }
     default: {
