@@ -288,106 +288,6 @@ const initialState: IPurchase[] = [
   },
   {
     id: uuid(),
-    tokenName: 'Theta Network',
-    transactions: [
-      {
-        id: uuid(),
-        unitPrice: 2.191_76,
-        quantity: 17,
-        date: {
-          day: '8',
-          month: '2',
-          year: '2021'
-        }
-      },
-      {
-        id: uuid(),
-        unitPrice: 9.19,
-        quantity: 3,
-        date: {
-          day: '18',
-          month: '4',
-          year: '2021'
-        }
-      }
-    ]
-  },
-  {
-    id: uuid(),
-    tokenName: 'VeChain',
-    transactions: [
-      {
-        id: uuid(),
-        unitPrice: 0.148_83,
-        quantity: 666,
-        date: {
-          day: '16',
-          month: '4',
-          year: '2021'
-        }
-      }
-    ]
-  },
-  {
-    id: uuid(),
-    tokenName: 'Stellar',
-    transactions: [
-      {
-        id: uuid(),
-        unitPrice: 0.294_043_887_1,
-        quantity: 31.9,
-        date: {
-          day: '19',
-          month: '8',
-          year: '2021'
-        }
-      },
-      {
-        id: uuid(),
-        unitPrice: 0.305_33,
-        quantity: 120,
-        date: {
-          day: '8',
-          month: '10',
-          year: '2021'
-        }
-      }
-    ]
-  },
-  {
-    id: uuid(),
-    tokenName: 'Sandbox',
-    transactions: [
-      {
-        id: uuid(),
-        unitPrice: 5.309,
-        quantity: 10,
-        date: {
-          day: '4',
-          month: '12',
-          year: '2021'
-        }
-      }
-    ]
-  },
-  {
-    id: uuid(),
-    tokenName: 'Enjin Coin',
-    transactions: [
-      {
-        id: uuid(),
-        unitPrice: 2.588,
-        quantity: 10,
-        date: {
-          day: '4',
-          month: '12',
-          year: '2021'
-        }
-      }
-    ]
-  },
-  {
-    id: uuid(),
     tokenName: 'Itheum',
     transactions: [
       {
@@ -401,23 +301,123 @@ const initialState: IPurchase[] = [
         }
       }
     ]
-  },
-  {
-    id: uuid(),
-    tokenName: 'Siacoin',
-    transactions: [
-      {
-        id: uuid(),
-        unitPrice: 0.039_451_311_1,
-        quantity: 2534.77,
-        date: {
-          day: '1',
-          month: '3',
-          year: '2022'
-        }
-      }
-    ]
   }
+  // {
+  //   id: uuid(),
+  //   tokenName: 'Theta Network',
+  //   transactions: [
+  //     {
+  //       id: uuid(),
+  //       unitPrice: 2.191_76,
+  //       quantity: 17,
+  //       date: {
+  //         day: '8',
+  //         month: '2',
+  //         year: '2021'
+  //       }
+  //     },
+  //     {
+  //       id: uuid(),
+  //       unitPrice: 9.19,
+  //       quantity: 3,
+  //       date: {
+  //         day: '18',
+  //         month: '4',
+  //         year: '2021'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: uuid(),
+  //   tokenName: 'VeChain',
+  //   transactions: [
+  //     {
+  //       id: uuid(),
+  //       unitPrice: 0.148_83,
+  //       quantity: 666,
+  //       date: {
+  //         day: '16',
+  //         month: '4',
+  //         year: '2021'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: uuid(),
+  //   tokenName: 'Stellar',
+  //   transactions: [
+  //     {
+  //       id: uuid(),
+  //       unitPrice: 0.294_043_887_1,
+  //       quantity: 31.9,
+  //       date: {
+  //         day: '19',
+  //         month: '8',
+  //         year: '2021'
+  //       }
+  //     },
+  //     {
+  //       id: uuid(),
+  //       unitPrice: 0.305_33,
+  //       quantity: 120,
+  //       date: {
+  //         day: '8',
+  //         month: '10',
+  //         year: '2021'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: uuid(),
+  //   tokenName: 'Sandbox',
+  //   transactions: [
+  //     {
+  //       id: uuid(),
+  //       unitPrice: 5.309,
+  //       quantity: 10,
+  //       date: {
+  //         day: '4',
+  //         month: '12',
+  //         year: '2021'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: uuid(),
+  //   tokenName: 'Enjin Coin',
+  //   transactions: [
+  //     {
+  //       id: uuid(),
+  //       unitPrice: 2.588,
+  //       quantity: 10,
+  //       date: {
+  //         day: '4',
+  //         month: '12',
+  //         year: '2021'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: uuid(),
+  //   tokenName: 'Siacoin',
+  //   transactions: [
+  //     {
+  //       id: uuid(),
+  //       unitPrice: 0.039_451_311_1,
+  //       quantity: 2534.77,
+  //       date: {
+  //         day: '1',
+  //         month: '3',
+  //         year: '2022'
+  //       }
+  //     }
+  //   ]
+  // }
 ]
   .sort((a, b) => a.tokenName.localeCompare(b.tokenName))
   .map((purchase) => {
