@@ -31,9 +31,11 @@ export default function PurchaseList({
 
   if (isTokensDataLoading) {
     return (
-      <div className='flex h-full w-full flex-col gap-y-5 p-4'>
+      <div className='flex h-full w-full flex-col gap-y-5 rounded-t-md'>
         {purchasedList.map((purchased) => (
-          <div key={purchased.id} className='h-16 w-full animate-pulse rounded-md bg-background' />
+          <div key={purchased.id} className='flex w-full flex-col'>
+            <div className='h-24 w-full animate-pulse rounded-md bg-background' />
+          </div>
         ))}
       </div>
     );
