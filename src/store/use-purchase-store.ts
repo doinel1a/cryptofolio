@@ -432,7 +432,7 @@ const initialState: IPurchase[] = [
   });
 
 interface IState {
-  purchased: IPurchase[];
+  purchase: IPurchase[];
 }
 
 interface IActions {
@@ -447,7 +447,7 @@ interface IAction {
 }
 
 function purchaseReducer(state: IState, action: IAction) {
-  const { purchased: currentPurchases } = state;
+  const { purchase: currentPurchases } = state;
   const { type } = action;
 
   switch (type) {
@@ -478,7 +478,7 @@ function purchaseReducer(state: IState, action: IAction) {
         });
 
         return {
-          purchased: deepCurrentPurchases
+          purchase: deepCurrentPurchases
         };
       }
 
@@ -494,7 +494,7 @@ function purchaseReducer(state: IState, action: IAction) {
       });
 
       return {
-        purchased: deepCurrentPurchases
+        purchase: deepCurrentPurchases
       };
     }
     case 'deletePurchase': {
@@ -503,7 +503,7 @@ function purchaseReducer(state: IState, action: IAction) {
       deepCurrentPurchases = deepCurrentPurchases.filter((purchase) => purchase.id !== idToRemove);
 
       return {
-        purchased: deepCurrentPurchases
+        purchase: deepCurrentPurchases
       };
     }
     case 'deletePurchaseTransaction': {
@@ -539,7 +539,7 @@ function purchaseReducer(state: IState, action: IAction) {
       }
 
       return {
-        purchased: deepCurrentPurchases
+        purchase: deepCurrentPurchases
       };
     }
     default: {
@@ -551,7 +551,7 @@ function purchaseReducer(state: IState, action: IAction) {
 const usePurchaseStore = create(
   persist<IState & IActions>(
     (set) => ({
-      purchased: initialState,
+      purchase: initialState,
       addNewPurchase: (newPurchase: TPurchase) =>
         set((state) => purchaseReducer(state, { type: 'addNewPurchase', payload: newPurchase })),
       deletePurchase: (id: string) =>

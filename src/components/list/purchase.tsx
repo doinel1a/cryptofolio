@@ -9,17 +9,17 @@ import UIStatus from '../ui-status';
 import PurchaseListRow from './shared/purchase-list-row';
 
 interface IPurchaseList {
-  purchasedList: IPurchase[];
+  purchaseList: IPurchase[];
   tokensData: (IAPITokenData | undefined)[] | undefined;
   isTokensDataLoading: boolean;
 }
 
 export default function PurchaseList({
-  purchasedList,
+  purchaseList,
   tokensData,
   isTokensDataLoading
 }: IPurchaseList) {
-  if (purchasedList.length === 0) {
+  if (purchaseList.length === 0) {
     return (
       <UIStatus
         status='warning'
@@ -32,8 +32,8 @@ export default function PurchaseList({
   if (isTokensDataLoading) {
     return (
       <div className='flex h-full w-full flex-col gap-y-5 rounded-t-md'>
-        {purchasedList.map((purchased) => (
-          <div key={purchased.id} className='flex w-full flex-col'>
+        {purchaseList.map((purchase) => (
+          <div key={purchase.id} className='flex w-full flex-col'>
             <div className='h-24 w-full animate-pulse rounded-md bg-background' />
           </div>
         ))}
@@ -43,19 +43,19 @@ export default function PurchaseList({
 
   return (
     <div className='flex h-full w-full flex-col gap-y-5 rounded-t-md'>
-      {purchasedList.map(
-        (purchased) =>
+      {purchaseList.map(
+        (purchase) =>
           tokensData?.map(
             (token) =>
-              purchased.tokenName === token?.name && (
+              purchase.tokenName === token?.name && (
                 <PurchaseListRow
-                  key={purchased.id}
-                  purchaseID={purchased.id}
+                  key={purchase.id}
+                  purchaseID={purchase.id}
                   tokenName={token.name}
                   tokenSymbol={token.symbol}
                   tokenLogoURL={token.logoURL}
                   tokenCurrentPrice={token.currentPrice}
-                  transactions={purchased.transactions}
+                  transactions={purchase.transactions}
                 />
               )
           )

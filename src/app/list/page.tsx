@@ -28,11 +28,11 @@ interface IListPage {
 export default function ListPage({ searchParams }: IListPage) {
   const selectedTab = (searchParams.tab || CTabsName.purchase) as string;
 
-  const purchasedList = usePurchaseStore((state) => state.purchased);
+  const purchaseList = usePurchaseStore((state) => state.purchase);
 
   const { error: supportedTokensErrorMessage, data: supportedTokens } = useGetSupportedTokens(
-    purchasedList,
-    purchasedList.length > 0
+    purchaseList,
+    purchaseList.length > 0
   );
   const { isLoading: isTokensDataLoading, tokensData } = useGetTokensData(
     supportedTokens,
@@ -65,7 +65,7 @@ export default function ListPage({ searchParams }: IListPage) {
       </TabsList>
       <TabsContent value={CTabsName.purchase} className='h-full w-full overflow-y-scroll p-4'>
         <PurchaseList
-          purchasedList={purchasedList}
+          purchaseList={purchaseList}
           tokensData={tokensData}
           isTokensDataLoading={isTokensDataLoading}
         />

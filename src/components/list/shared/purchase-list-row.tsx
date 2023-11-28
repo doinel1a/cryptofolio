@@ -44,12 +44,12 @@ export default function PurchaseListRow({
     (accumulator, currentTx) => accumulator + currentTx.unitPrice * currentTx.quantity,
     0
   );
-  const totalPurchasedQuantity = transactions.reduce(
+  const totalPurchaseQuantity = transactions.reduce(
     (accumulator, currentTx) => accumulator + currentTx.quantity,
     0
   );
   const investmentOutcome = Math.abs(currentInvestmentValue - totalInvested);
-  const averagePurchasePrice = totalInvested / totalPurchasedQuantity;
+  const averagePurchasePrice = totalInvested / totalPurchaseQuantity;
 
   return (
     <div className='flex w-full flex-col'>
@@ -92,7 +92,7 @@ export default function PurchaseListRow({
 
             <div className='flex h-1/2 w-full items-center justify-between'>
               <p className='text-sm'>
-                {roundDecimal(totalPurchasedQuantity).toLocaleString('it')} {tokenSymbol}
+                {roundDecimal(totalPurchaseQuantity).toLocaleString('it')} {tokenSymbol}
               </p>
               <p
                 className={`${
