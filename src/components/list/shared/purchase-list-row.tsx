@@ -14,25 +14,25 @@ import TokenLogo from './token-logo';
 
 interface IPurchaseListRow extends React.HTMLAttributes<HTMLDivElement> {
   purchaseID: string;
+  transactions: IPurchaseTransaction[];
   tokenName: string;
   tokenSymbol: string;
   tokenLogoURL: string;
   tokenCurrentPrice: number;
-  transactions: IPurchaseTransaction[];
 }
 
 export default function PurchaseListRow({
   purchaseID,
+  transactions,
   tokenName,
   tokenSymbol,
   tokenLogoURL,
   tokenCurrentPrice,
-  transactions,
   className,
   ...properties
 }: IPurchaseListRow) {
-  const deletePurchase = usePurchaseStore((state) => state.deletePurchase);
-  const deletePurchaseTransaction = usePurchaseStore((state) => state.deletePurchaseTransaction);
+  const deletePurchase = usePurchaseStore((store) => store.deletePurchase);
+  const deletePurchaseTransaction = usePurchaseStore((store) => store.deletePurchaseTransaction);
 
   const [isTransactionsListExpanded, setIsTransactionsListExpanded] = useState(false);
 
