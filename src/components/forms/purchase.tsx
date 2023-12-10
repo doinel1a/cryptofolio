@@ -18,7 +18,7 @@ import { Input } from '../ui/form/input';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
 export default function AddPurchaseForm() {
-  const addNewPurchase = usePurchaseStore((state) => state.addNewPurchase);
+  const addNewPurchase = usePurchaseStore((store) => store.addNewPurchase);
 
   const form = useForm<TPurchase>({
     resolver: zodResolver(PurchaseSchema),

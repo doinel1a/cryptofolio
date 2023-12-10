@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import dynamic from 'next/dynamic';
 
@@ -12,9 +12,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { refetchInterval } from '@/constants/misc';
 import ERoutesName from '@/constants/routes';
 import CTabsName from '@/constants/tabs';
-import useGetSupportedTokens from '@/hooks/use-get-supported-tokens';
-import useGetTokensData from '@/hooks/use-get-tokens-data';
+import useGetTokensMetadata from '@/hooks/use-get-tokens-metadata';
+import useGetTokensPrice from '@/hooks/use-get-tokens-price';
+import useGetTokensSymbol from '@/hooks/use-get-tokens-symbol';
+import ITokenData from '@/interfaces/i-token-data';
 import usePurchaseStore from '@/store/use-purchase-store';
+import useUserSettingsStore from '@/store/use-user-settings-store';
 
 const PurchaseList = dynamic(() => import('@/components/list/purchase'), {
   ssr: false,
@@ -28,25 +31,83 @@ interface IListPage {
 export default function ListPage({ searchParams }: IListPage) {
   const selectedTab = (searchParams.tab || CTabsName.purchase) as string;
 
-  const purchaseList = usePurchaseStore((state) => state.purchase);
+  const apiKey = useUserSettingsStore((store) => store.apiKey);
+  const currency = useUserSettingsStore((store) => store.currency);
+  const purchaseList = usePurchaseStore((store) => store.purchase);
 
-  const { error: supportedTokensErrorMessage, data: supportedTokens } = useGetSupportedTokens(
-    purchaseList,
-    purchaseList.length > 0
-  );
-  const { isLoading: isTokensDataLoading, tokensData } = useGetTokensData(
-    supportedTokens,
-    refetchInterval
+  const [tokensData, setTokensData] = useState<ITokenData[]>([]);
+
+  const {
+    isLoading: isTokensSymbolLoading,
+    error: tokensSymbolError,
+    data: tokensSymbol
+  } = useGetTokensSymbol(apiKey, purchaseList, purchaseList.length > 0);
+
+  const {
+    isLoading: isTokensMetadataLoading,
+    error: tokensMetadataError,
+    data: tokensMetadata
+  } = useGetTokensMetadata(
+    apiKey,
+    tokensSymbol,
+    tokensSymbol !== undefined && tokensSymbol.length > 0
   );
 
-  if (supportedTokensErrorMessage) {
+  const {
+    isLoading: isTokensPriceLoading,
+    error: tokensPriceError,
+    data: tokensPrice
+  } = useGetTokensPrice(
+    apiKey,
+    currency,
+    tokensSymbol,
+    refetchInterval,
+    tokensSymbol !== undefined && tokensSymbol.length > 0
+  );
+
+  useEffect(() => {
+    if (
+      !isTokensMetadataLoading &&
+      !tokensMetadataError &&
+      tokensMetadata &&
+      !isTokensPriceLoading &&
+      !tokensPriceError &&
+      tokensPrice
+    ) {
+      const _tokensData: ITokenData[] = tokensMetadata.map((tokenMetadata) => {
+        const _tokensPrice = tokensPrice.find((token) => token.id === tokenMetadata.id);
+
+        return {
+          ...tokenMetadata,
+          ..._tokensPrice!
+        } satisfies ITokenData;
+      });
+
+      setTokensData(_tokensData);
+    }
+  }, [
+    isTokensMetadataLoading,
+    tokensMetadataError,
+    tokensMetadata,
+    isTokensPriceLoading,
+    tokensPriceError,
+    tokensPrice
+  ]);
+
+  if (tokensSymbolError) {
     return (
-      <UIStatus
-        status='error'
-        statusTitle='Error'
-        statusMessage={supportedTokensErrorMessage.message}
-      />
+      <UIStatus status='error' statusTitle='Error' statusMessage={tokensSymbolError.message} />
     );
+  }
+
+  if (tokensMetadataError) {
+    return (
+      <UIStatus status='error' statusTitle='Error' statusMessage={tokensMetadataError.message} />
+    );
+  }
+
+  if (tokensPriceError) {
+    return <UIStatus status='error' statusTitle='Error' statusMessage={tokensPriceError.message} />;
   }
 
   return (
@@ -65,9 +126,10 @@ export default function ListPage({ searchParams }: IListPage) {
       </TabsList>
       <TabsContent value={CTabsName.purchase} className='h-full w-full overflow-y-scroll p-4'>
         <PurchaseList
-          purchaseList={purchaseList}
+          isTokensDataLoading={
+            isTokensSymbolLoading || isTokensMetadataLoading || isTokensPriceLoading
+          }
           tokensData={tokensData}
-          isTokensDataLoading={isTokensDataLoading}
         />
       </TabsContent>
       <TabsContent value={CTabsName.stake} className='h-full w-full overflow-y-scroll p-4'>

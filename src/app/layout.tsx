@@ -10,6 +10,7 @@ import React from 'react';
 
 import BottomNavigation from '@/components/navigation/bottom';
 import TopNavigation from '@/components/navigation/top';
+import { Toaster } from '@/components/ui/toaster';
 import EStorageKeys from '@/constants/keys';
 
 import Providers from './providers';
@@ -41,6 +42,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </Providers>
 
           <BottomNavigation />
+
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

@@ -4,6 +4,7 @@ import ERoutesName from '@/constants/routes';
 
 import NavLink from '../nav-link';
 import { ThemeToggle } from '../ui/theme/toggle';
+import UserSettings from '../user-settings';
 
 export default function TopNavigation() {
   return (
@@ -15,7 +16,10 @@ export default function TopNavigation() {
         CRYPTOFOLIO
       </NavLink>
 
-      <ThemeToggle />
+      <div className='flex gap-x-3.5'>
+        <ThemeToggle />
+        <UserSettings />
+      </div>
     </header>
   );
 }

@@ -5,34 +5,38 @@ import React, { useState } from 'react';
 import { ChevronUp } from 'lucide-react';
 
 import { IPurchaseTransaction } from '@/interfaces/i-purchase';
-import { cn, roundDecimal } from '@/lib/utils';
+import { cn, formatNumber, roundDecimal } from '@/lib/utils';
 import usePurchaseStore from '@/store/use-purchase-store';
+import useUserSettingsStore from '@/store/use-user-settings-store';
 
 import Column from './column';
+import CurrencyIcon from './currency-icon';
 import DeleteButton from './delete-button';
 import TokenLogo from './token-logo';
 
 interface IPurchaseListRow extends React.HTMLAttributes<HTMLDivElement> {
   purchaseID: string;
+  transactions: IPurchaseTransaction[];
   tokenName: string;
   tokenSymbol: string;
   tokenLogoURL: string;
   tokenCurrentPrice: number;
-  transactions: IPurchaseTransaction[];
 }
 
 export default function PurchaseListRow({
   purchaseID,
+  transactions,
   tokenName,
   tokenSymbol,
   tokenLogoURL,
   tokenCurrentPrice,
-  transactions,
   className,
   ...properties
 }: IPurchaseListRow) {
-  const deletePurchase = usePurchaseStore((state) => state.deletePurchase);
-  const deletePurchaseTransaction = usePurchaseStore((state) => state.deletePurchaseTransaction);
+  const currency = useUserSettingsStore((store) => store.currency);
+
+  const deletePurchase = usePurchaseStore((store) => store.deletePurchase);
+  const deletePurchaseTransaction = usePurchaseStore((store) => store.deletePurchaseTransaction);
 
   const [isTransactionsListExpanded, setIsTransactionsListExpanded] = useState(false);
 
@@ -92,14 +96,14 @@ export default function PurchaseListRow({
 
             <div className='flex h-1/2 w-full items-center justify-between'>
               <p className='text-sm'>
-                {roundDecimal(totalPurchaseQuantity).toLocaleString('it')} {tokenSymbol}
+                {formatNumber(roundDecimal(totalPurchaseQuantity), currency)} {tokenSymbol}
               </p>
               <p
-                className={`${
+                className={`flex items-center gap-x-1 ${
                   currentInvestmentValue > totalInvested ? 'text-green-500' : 'text-destructive'
                 }`}
               >
-                € {roundDecimal(currentInvestmentValue, 2).toLocaleString('it')}
+                <CurrencyIcon /> {formatNumber(roundDecimal(currentInvestmentValue, 2), currency)}
               </p>
             </div>
           </div>
@@ -122,14 +126,14 @@ export default function PurchaseListRow({
                 title='Current price'
                 value={tokenCurrentPrice}
                 className='w-1/2 rounded-md border p-1.5'
-                currency
+                isCurrency
               />
 
               <Column
                 title='Average price'
                 value={averagePurchasePrice}
                 className='w-1/2 rounded-md border p-1.5'
-                currency
+                isCurrency
               />
             </div>
 
@@ -138,14 +142,14 @@ export default function PurchaseListRow({
                 title={currentInvestmentValue > totalInvested ? 'Gain' : 'Loss'}
                 value={investmentOutcome}
                 className='w-1/2 rounded-md border p-1.5'
-                currency
+                isCurrency
               />
 
               <Column
                 title='Investment'
                 value={totalInvested}
                 className='w-1/2 rounded-md border p-1.5'
-                currency
+                isCurrency
               />
             </div>
           </div>
@@ -157,9 +161,13 @@ export default function PurchaseListRow({
                 index === transactions.length - 1 ? '' : 'border-b-2'
               }`}
             >
-              <Column title='Price' value={transaction.unitPrice} currency />
+              <Column title='Price' value={transaction.unitPrice} isCurrency />
               <Column title='Qty' value={transaction.quantity} />
-              <Column title='Cost' value={transaction.unitPrice * transaction.quantity} currency />
+              <Column
+                title='Cost'
+                value={transaction.unitPrice * transaction.quantity}
+                isCurrency
+              />
               <Column
                 title='Date'
                 value={`

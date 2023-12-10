@@ -1,11 +1,14 @@
 import React from 'react';
 
-import { cn, roundDecimal } from '@/lib/utils';
+import { cn, formatNumber, roundDecimal } from '@/lib/utils';
+import useUserSettingsStore from '@/store/use-user-settings-store';
+
+import CurrencyIcon from './currency-icon';
 
 interface IColumn extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   value: string | number;
-  currency?: boolean;
+  isCurrency?: boolean;
   titleCSS?: string;
   contentCSS?: string;
 }
@@ -13,16 +16,15 @@ interface IColumn extends React.HTMLAttributes<HTMLDivElement> {
 export default function Column({
   title,
   value,
-  currency = false,
+  isCurrency = false,
   titleCSS,
   contentCSS,
   className: columnCSS,
   ...properties
 }: IColumn) {
-  const _value =
-    typeof value === 'number'
-      ? `${currency ? '€' : ''} ${roundDecimal(value, 2).toLocaleString('it')}`
-      : value;
+  const currency = useUserSettingsStore((store) => store.currency);
+
+  const _value = typeof value === 'number' ? formatNumber(roundDecimal(value, 2), currency) : value;
 
   return (
     <div
@@ -30,7 +32,10 @@ export default function Column({
       {...properties}
     >
       <p className={cn('text-xs', titleCSS)}>{title}</p>
-      <p className={cn('text-sm', contentCSS)}>{_value}</p>
+      <p className={cn('flex items-center gap-x-1 text-sm', contentCSS)}>
+        {isCurrency ? <CurrencyIcon className='h-3 w-3' /> : <></>}
+        {_value}
+      </p>
     </div>
   );
 }

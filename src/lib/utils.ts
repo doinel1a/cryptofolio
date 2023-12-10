@@ -3,6 +3,8 @@ import type { ClassValue } from 'clsx';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+import { ECurrency } from '@/constants/misc';
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -32,4 +34,12 @@ export function roundDecimal(value: number, decimalPlace?: number) {
       return Math.round((value + Number.EPSILON) * 1) / 1;
     }
   }
+}
+
+export function formatNumber(value: number, currency: ECurrency) {
+  if (currency === ECurrency.EUR) {
+    return value.toLocaleString('it');
+  }
+
+  return value.toLocaleString('en');
 }
