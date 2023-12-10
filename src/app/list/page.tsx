@@ -32,6 +32,7 @@ export default function ListPage({ searchParams }: IListPage) {
   const selectedTab = (searchParams.tab || CTabsName.purchase) as string;
 
   const apiKey = useUserSettingsStore((store) => store.apiKey);
+  const currency = useUserSettingsStore((store) => store.currency);
   const purchaseList = usePurchaseStore((store) => store.purchase);
 
   const [tokensData, setTokensData] = useState<ITokenData[]>([]);
@@ -58,6 +59,7 @@ export default function ListPage({ searchParams }: IListPage) {
     data: tokensPrice
   } = useGetTokensPrice(
     apiKey,
+    currency,
     tokensSymbol,
     refetchInterval,
     tokensSymbol !== undefined && tokensSymbol.length > 0

@@ -1,3 +1,5 @@
+import { ECurrency } from './misc';
+
 const CORS_WORK_AROUND = 'https://cors-anywhere.herokuapp.com/';
 
 const URLS = {
@@ -9,7 +11,7 @@ const URLS = {
       ${CORS_WORK_AROUND}https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${ids}&aux=logo&skip_invalid=true
     `;
   },
-  tokensData(tokensId: string[], currencyCode = 'EUR') {
+  tokensData(tokensId: string[], currencyCode: ECurrency) {
     const ids = tokensId.join(',');
 
     return `

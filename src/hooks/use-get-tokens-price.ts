@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useQuery } from '@tanstack/react-query';
 
 import { OPTIONS, URLS } from '@/constants/coin-market-cap-api';
+import { ECurrency } from '@/constants/misc';
 import IAPITokenPrice from '@/interfaces/i-api-token-price';
 import { roundDecimal } from '@/lib/utils';
 
 export default function useGetTokensPrice(
   apiKey: string,
+  currency: ECurrency,
   tokensSymbol: string[] | undefined,
   refetchInterval: number,
   enabled: boolean
@@ -15,7 +18,7 @@ export default function useGetTokensPrice(
     queryFn: async () => {
       const tokensPrice: IAPITokenPrice[] = [];
 
-      const response = await fetch(URLS.tokensData(tokensSymbol || [], 'EUR'), {
+      const response = await fetch(URLS.tokensData(tokensSymbol || [], currency), {
         method: OPTIONS.method,
         headers: OPTIONS.headers(apiKey)
       });
@@ -38,6 +41,10 @@ export default function useGetTokensPrice(
         for (const result of Object.values(resultJSON.data)) {
           const data = Array.isArray(result) ? result[0] : [];
 
+          /*
+            Possible solution to remove the ts-ignore(s)
+            https://chat.openai.com/c/c4e190e5-628e-4872-be72-21651397b008
+          */
           if (
             data !== null &&
             data !== undefined &&
@@ -48,16 +55,22 @@ export default function useGetTokensPrice(
             data.quote !== null &&
             data.quote !== undefined &&
             typeof data.quote === 'object' &&
-            'EUR' in data.quote &&
-            data.quote.EUR !== null &&
-            data.quote.EUR !== undefined &&
-            typeof data.quote.EUR === 'object' &&
-            'price' in data.quote.EUR &&
-            typeof data.quote.EUR.price === 'number'
+            currency in data.quote &&
+            // @ts-ignore
+            data.quote[currency] !== null &&
+            // @ts-ignore
+            data.quote[currency] !== undefined &&
+            // @ts-ignore
+            typeof data.quote[currency] === 'object' &&
+            // @ts-ignore
+            'price' in data.quote[currency] &&
+            // @ts-ignore
+            typeof data.quote[currency].price === 'number'
           ) {
             tokensPrice.push({
               id: data.id,
-              currentPrice: roundDecimal(data.quote.EUR.price, 2)
+              // @ts-ignore
+              currentPrice: roundDecimal(data.quote[currency].price, 5)
             });
           }
         }
