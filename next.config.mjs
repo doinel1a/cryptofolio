@@ -6,6 +6,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'assets.coingecko.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 's2.coinmarketcap.com'
       }
     ]
   },

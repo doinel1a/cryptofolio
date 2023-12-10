@@ -2,23 +2,20 @@
 
 import React from 'react';
 
-import IAPITokenData from '@/interfaces/i-api-token-data';
-import { IPurchase } from '@/interfaces/i-purchase';
+import ITokenData from '@/interfaces/i-token-data';
+import usePurchaseStore from '@/store/use-purchase-store';
 
 import UIStatus from '../ui-status';
 import PurchaseListRow from './shared/purchase-list-row';
 
 interface IPurchaseList {
-  purchaseList: IPurchase[];
-  tokensData: (IAPITokenData | undefined)[] | undefined;
   isTokensDataLoading: boolean;
+  tokensData: ITokenData[];
 }
 
-export default function PurchaseList({
-  purchaseList,
-  tokensData,
-  isTokensDataLoading
-}: IPurchaseList) {
+export default function PurchaseList({ tokensData, isTokensDataLoading }: IPurchaseList) {
+  const purchaseList = usePurchaseStore((store) => store.purchase);
+
   if (purchaseList.length === 0) {
     return (
       <UIStatus
@@ -51,11 +48,11 @@ export default function PurchaseList({
                 <PurchaseListRow
                   key={purchase.id}
                   purchaseID={purchase.id}
+                  transactions={purchase.transactions}
                   tokenName={token.name}
                   tokenSymbol={token.symbol}
                   tokenLogoURL={token.logoURL}
                   tokenCurrentPrice={token.currentPrice}
-                  transactions={purchase.transactions}
                 />
               )
           )
