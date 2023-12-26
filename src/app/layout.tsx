@@ -4,9 +4,9 @@ import '../styles/globals.css';
 import '../styles/globals.scss';
 import '@total-typescript/ts-reset';
 
-import type { Metadata } from 'next';
-
 import React from 'react';
+
+import type { Metadata } from 'next';
 
 import BottomNavigation from '@/components/navigation/bottom';
 import TopNavigation from '@/components/navigation/top';

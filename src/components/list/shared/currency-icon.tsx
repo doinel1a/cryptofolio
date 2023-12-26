@@ -6,6 +6,7 @@ import { ECurrency } from '@/constants/misc';
 import { cn } from '@/lib/utils';
 import useUserSettingsStore from '@/store/use-user-settings-store';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ICurrencyIcon extends React.SVGAttributes<HTMLOrSVGElement> {}
 
 export default function CurrencyIcon({ className, ...properties }: ICurrencyIcon) {

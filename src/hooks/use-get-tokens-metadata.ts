@@ -1,7 +1,8 @@
+import type IAPITokenMetadata from '@/interfaces/i-api-token-metadata';
+
 import { useQuery } from '@tanstack/react-query';
 
 import { OPTIONS, URLS } from '@/constants/coin-market-cap-api';
-import IAPITokenMetadata from '@/interfaces/i-api-token-metadata';
 
 export default function useGetTokensMetadata(
   apiKey: string,
@@ -13,7 +14,7 @@ export default function useGetTokensMetadata(
     queryFn: async () => {
       const tokensMetadata: IAPITokenMetadata[] = [];
 
-      const response = await fetch(URLS.tokensMetadata(tokensSymbol || []), {
+      const response = await fetch(URLS.tokensMetadata(tokensSymbol ?? []), {
         method: OPTIONS.method,
         headers: OPTIONS.headers(apiKey)
       });

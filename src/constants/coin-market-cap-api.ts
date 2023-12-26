@@ -1,4 +1,4 @@
-import { ECurrency } from './misc';
+import { type ECurrency } from './misc';
 
 const CORS_WORK_AROUND = 'https://cors-anywhere.herokuapp.com/';
 

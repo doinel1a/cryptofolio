@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+
+import type IAPITokenPrice from '@/interfaces/i-api-token-price';
+
 import { useQuery } from '@tanstack/react-query';
 
 import { OPTIONS, URLS } from '@/constants/coin-market-cap-api';
-import { ECurrency } from '@/constants/misc';
-import IAPITokenPrice from '@/interfaces/i-api-token-price';
+import { type ECurrency } from '@/constants/misc';
 import { roundDecimal } from '@/lib/utils';
 
 export default function useGetTokensPrice(
@@ -18,7 +20,7 @@ export default function useGetTokensPrice(
     queryFn: async () => {
       const tokensPrice: IAPITokenPrice[] = [];
 
-      const response = await fetch(URLS.tokensData(tokensSymbol || [], currency), {
+      const response = await fetch(URLS.tokensData(tokensSymbol ?? [], currency), {
         method: OPTIONS.method,
         headers: OPTIONS.headers(apiKey)
       });
@@ -65,11 +67,13 @@ export default function useGetTokensPrice(
             // @ts-ignore
             'price' in data.quote[currency] &&
             // @ts-ignore
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             typeof data.quote[currency].price === 'number'
           ) {
             tokensPrice.push({
               id: data.id,
               // @ts-ignore
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
               currentPrice: roundDecimal(data.quote[currency].price, 5)
             });
           }

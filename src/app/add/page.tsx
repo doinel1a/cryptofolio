@@ -20,11 +20,11 @@ const AddStakeForm = dynamic(() => import('@/components/forms/stake'), {
 });
 
 interface IAddPage {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string | string[] | undefined>;
 }
 
 export default function AddPage({ searchParams }: IAddPage) {
-  const selectedTab = (searchParams.tab || CTabsName.purchase) as string;
+  const selectedTab = (searchParams.tab ?? CTabsName.purchase) as string;
 
   return (
     <Tabs defaultValue={selectedTab} className='flex h-full w-full flex-col p-2.5'>

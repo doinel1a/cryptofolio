@@ -3,9 +3,9 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import EStorageKeys from '@/constants/keys';
-import { IPurchase } from '@/interfaces/i-purchase';
+import { type IPurchase } from '@/interfaces/i-purchase';
 import { createDeepCopy, roundDecimal } from '@/lib/utils';
-import { TPurchase } from '@/schemas/s-purchase';
+import { type TPurchase } from '@/schemas/s-purchase';
 
 const initialState: IPurchase[] = [
   {
@@ -483,7 +483,7 @@ function purchaseReducer(state: IState, action: IAction) {
         };
       }
 
-      deepCurrentPurchaseList[newTransactionIndex].transactions.push({
+      deepCurrentPurchaseList[newTransactionIndex]?.transactions.push({
         id: uuid(),
         unitPrice: roundDecimal(Number(unitPrice), 5),
         quantity: roundDecimal(Number(quantity), 5),

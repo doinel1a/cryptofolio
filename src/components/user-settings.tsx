@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 
+import type { TUserSettings } from '@/schemas/s-user-settings';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CircleUserRound, DollarSign, Euro } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 import { ECurrency } from '@/constants/misc';
-import { TUserSettings, UserSettingsSchema } from '@/schemas/s-user-settings';
+import { UserSettingsSchema } from '@/schemas/s-user-settings';
 import useUserSettingsStore from '@/store/use-user-settings-store';
 
 import { Button } from './ui/button';
