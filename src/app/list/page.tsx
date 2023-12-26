@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 
+import type ITokenData from '@/interfaces/i-token-data';
+
 import dynamic from 'next/dynamic';
 
 import DynamicFallback from '@/components/dynamic-fallback';
@@ -15,7 +17,6 @@ import CTabsName from '@/constants/tabs';
 import useGetTokensMetadata from '@/hooks/use-get-tokens-metadata';
 import useGetTokensPrice from '@/hooks/use-get-tokens-price';
 import useGetTokensSymbol from '@/hooks/use-get-tokens-symbol';
-import ITokenData from '@/interfaces/i-token-data';
 import usePurchaseStore from '@/store/use-purchase-store';
 import useUserSettingsStore from '@/store/use-user-settings-store';
 
@@ -25,11 +26,11 @@ const PurchaseList = dynamic(() => import('@/components/list/purchase'), {
 });
 
 interface IListPage {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string | string[] | undefined>;
 }
 
 export default function ListPage({ searchParams }: IListPage) {
-  const selectedTab = (searchParams.tab || CTabsName.purchase) as string;
+  const selectedTab = (searchParams.tab ?? CTabsName.purchase) as string;
 
   const apiKey = useUserSettingsStore((store) => store.apiKey);
   const currency = useUserSettingsStore((store) => store.currency);

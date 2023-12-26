@@ -1,4 +1,6 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
+
+import type { PropsWithChildren } from 'react';
 
 import { Loader2, ShieldAlert, ShieldX } from 'lucide-react';
 

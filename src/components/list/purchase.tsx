@@ -2,7 +2,8 @@
 
 import React from 'react';
 
-import ITokenData from '@/interfaces/i-token-data';
+import type ITokenData from '@/interfaces/i-token-data';
+
 import usePurchaseStore from '@/store/use-purchase-store';
 
 import UIStatus from '../ui-status';

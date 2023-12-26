@@ -2,10 +2,12 @@
 
 import React from 'react';
 
+import type { TStake } from '@/schemas/s-stake';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { StakeSchema, TStake } from '@/schemas/s-stake';
+import { StakeSchema } from '@/schemas/s-stake';
 
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form/form';

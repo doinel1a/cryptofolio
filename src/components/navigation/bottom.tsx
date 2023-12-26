@@ -29,7 +29,7 @@ const navigationRoutes: Record<string, IRoutes> = {
   }
 };
 
-const routesKey = Object.keys(navigationRoutes) as (keyof typeof navigationRoutes)[];
+const routesKey = Object.keys(navigationRoutes);
 
 export default function BottomNavigation() {
   const currentPath = usePathname();
@@ -37,20 +37,26 @@ export default function BottomNavigation() {
   return (
     <nav className='mb-5 flex h-24 items-center justify-between px-2.5'>
       {routesKey.map((key) => {
-        const { path, icon: Icon } = navigationRoutes[key];
-        const isActive = currentPath === '/' ? path === '/' : path.includes(currentPath);
+        const route = navigationRoutes[key];
+        const isActive =
+          currentPath === '/' ? route?.path.toString() === '/' : route?.path.includes(currentPath);
+
+        if (!route) {
+          // eslint-disable-next-line unicorn/no-null
+          return null;
+        }
 
         return (
           <NavLink
             key={key}
-            href={path}
+            href={route.path}
             className={`flex h-full w-1/3 flex-col items-center justify-center rounded-b-md text-sm capitalize ${
               isActive
                 ? 'border-b border-l border-r bg-background-secondary text-accent-secondary shadow-md'
                 : 'border-t'
             } `}
           >
-            <Icon className='mb-1 h-6 w-6 transition-colors' />
+            <route.icon className='mb-1 h-6 w-6 transition-colors' />
             <span className='transition-colors'>{key}</span>
           </NavLink>
         );

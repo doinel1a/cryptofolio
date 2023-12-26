@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { OPTIONS, URLS } from '@/constants/coin-market-cap-api';
-import { IPurchase } from '@/interfaces/i-purchase';
+import { type IPurchase } from '@/interfaces/i-purchase';
 
 export default function useGetTokensSymbol(
   apiKey: string,

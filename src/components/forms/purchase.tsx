@@ -2,13 +2,15 @@
 
 import React from 'react';
 
+import type { TPurchase } from '@/schemas/s-purchase';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 import { cn } from '@/lib/utils';
-import { PurchaseSchema, TPurchase } from '@/schemas/s-purchase';
+import { PurchaseSchema } from '@/schemas/s-purchase';
 import usePurchaseStore from '@/store/use-purchase-store';
 
 import { Button } from '../ui/button';

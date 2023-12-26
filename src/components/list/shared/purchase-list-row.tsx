@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { ChevronUp } from 'lucide-react';
 
-import { IPurchaseTransaction } from '@/interfaces/i-purchase';
+import { type IPurchaseTransaction } from '@/interfaces/i-purchase';
 import { cn, formatNumber, roundDecimal } from '@/lib/utils';
 import usePurchaseStore from '@/store/use-purchase-store';
 import useUserSettingsStore from '@/store/use-user-settings-store';
