@@ -6,8 +6,8 @@ import type ITokenData from '@/interfaces/i-token-data';
 
 import dynamic from 'next/dynamic';
 
+import StakeList from '@/app/list/_components/stake-list';
 import DynamicFallback from '@/components/dynamic-fallback';
-import StakeList from '@/components/list/stake';
 import NavLink from '@/components/nav-link';
 import UIStatus from '@/components/ui-status';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -20,7 +20,7 @@ import useGetTokensSymbol from '@/hooks/use-get-tokens-symbol';
 import usePurchaseStore from '@/store/use-purchase-store';
 import useUserSettingsStore from '@/store/use-user-settings-store';
 
-const PurchaseList = dynamic(() => import('@/components/list/purchase'), {
+const PurchaseList = dynamic(() => import('@/app/list/_components/purchase-list'), {
   ssr: false,
   loading: () => <DynamicFallback className='rounded-t-md' />
 });
