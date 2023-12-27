@@ -6,7 +6,7 @@ import type ITokenData from '@/interfaces/i-token-data';
 
 import usePurchaseStore from '@/store/use-purchase-store';
 
-import UIStatus from '../ui-status';
+import UIStatus from '../../../components/ui-status';
 import PurchaseListRow from './shared/purchase-list-row';
 
 interface IPurchaseList {

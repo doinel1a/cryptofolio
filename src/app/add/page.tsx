@@ -10,11 +10,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ERoutesName from '@/constants/routes';
 import CTabsName from '@/constants/tabs';
 
-const AddPurchaseForm = dynamic(() => import('@/components/forms/purchase'), {
+const AddPurchaseForm = dynamic(() => import('@/app/add/_components/add-purchase-form'), {
   ssr: false,
   loading: () => <DynamicFallback className='rounded-t-md' />
 });
-const AddStakeForm = dynamic(() => import('@/components/forms/stake'), {
+const AddStakeForm = dynamic(() => import('@/app/add/_components/add-stake-form'), {
   ssr: false,
   loading: () => <DynamicFallback className='rounded-t-md' />
 });

@@ -12,13 +12,13 @@ import { ECurrency } from '@/constants/misc';
 import { UserSettingsSchema } from '@/schemas/s-user-settings';
 import useUserSettingsStore from '@/store/use-user-settings-store';
 
-import { Button } from './ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form/form';
-import { Input } from './ui/form/input';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { RadioGroup, RadioGroupItem } from './ui/radio-group';
-import { Separator } from './ui/separator';
-import { useToast } from './ui/use-toast';
+import { Button } from '../ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form/form';
+import { Input } from '../ui/form/input';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { Separator } from '../ui/separator';
+import { useToast } from '../ui/use-toast';
 
 export default function UserSettings() {
   const apiKey = useUserSettingsStore((store) => store.apiKey);

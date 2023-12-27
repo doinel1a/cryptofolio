@@ -13,11 +13,18 @@ import { cn } from '@/lib/utils';
 import { PurchaseSchema } from '@/schemas/s-purchase';
 import usePurchaseStore from '@/store/use-purchase-store';
 
-import { Button } from '../ui/button';
-import { Calendar } from '../ui/calendar';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form/form';
-import { Input } from '../ui/form/input';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Button } from '../../../components/ui/button';
+import { Calendar } from '../../../components/ui/calendar';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '../../../components/ui/form/form';
+import { Input } from '../../../components/ui/form/input';
+import { Popover, PopoverContent, PopoverTrigger } from '../../../components/ui/popover';
 
 export default function AddPurchaseForm() {
   const addNewPurchase = usePurchaseStore((store) => store.addNewPurchase);
