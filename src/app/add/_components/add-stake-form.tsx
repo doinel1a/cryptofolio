@@ -9,9 +9,16 @@ import { useForm } from 'react-hook-form';
 
 import { StakeSchema } from '@/schemas/s-stake';
 
-import { Button } from '../ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form/form';
-import { Input } from '../ui/form/input';
+import { Button } from '../../../components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '../../../components/ui/form/form';
+import { Input } from '../../../components/ui/form/input';
 
 export default function AddStakeForm() {
   const form = useForm<TStake>({
