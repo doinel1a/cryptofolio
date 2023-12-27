@@ -4,7 +4,7 @@ import ERoutesName from '@/constants/routes';
 
 import NavLink from '../nav-link';
 import { ThemeToggle } from '../ui/theme/toggle';
-import UserSettings from '../user-settings';
+import UserSettings from './user-settings';
 
 export default function TopNavigation() {
   return (
